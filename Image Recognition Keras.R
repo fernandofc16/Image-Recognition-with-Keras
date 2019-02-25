@@ -124,14 +124,15 @@ score
 ###################################################################################################################################
 
 # CNN
-img_processed_size = 32
+img_processed_size = dim(train_x_cifar)[2]
+img_depth = dim(train_x_cifar)[4]
   
 #Create a sequential model for cifar10 dataset
 model <- keras_model_sequential() 
 
 model %>%  
   #defining a 2-D convolution layer
-  layer_conv_2d(filter = img_processed_size, kernel_size = c(3,3), padding = "same", input_shape = c(img_processed_size, img_processed_size, 3)) %>%  
+  layer_conv_2d(filter = img_processed_size, kernel_size = c(3,3), padding = "same", input_shape = c(img_processed_size, img_processed_size, img_depth)) %>%  
   layer_activation("relu") %>%  
   #another 2-D convolution layer
   layer_conv_2d(filter = img_processed_size, kernel_size=c(3,3))  %>%  layer_activation("relu") %>%
@@ -175,14 +176,15 @@ result
 ##################################################################################################################
 
 # CNN
-img_processed_size = 28
+img_processed_size = dim(train_x_mnist)[2]
+img_depth = dim(train_x_mnist)[4]
 
 #Create a sequential model for mnist dataset
 model <- keras_model_sequential() 
 
 model %>%  
   #defining a 2-D convolution layer
-  layer_conv_2d(filter = img_processed_size, kernel_size = c(3,3), padding = "same", input_shape = c(img_processed_size, img_processed_size, 1)) %>%  
+  layer_conv_2d(filter = img_processed_size, kernel_size = c(3,3), padding = "same", input_shape = c(img_processed_size, img_processed_size, img_depth)) %>%  
   layer_activation("relu") %>%  
   #another 2-D convolution layer
   layer_conv_2d(filter = img_processed_size, kernel_size=c(3,3))  %>%  layer_activation("relu") %>%
@@ -242,15 +244,15 @@ for(i in 1:dim(test_y_cifar)[1]) {
 }
 
 #Calculate percentage
-print(paste('Percentage of correct predictions:', (correct/10000)*100, '%'))
+print(paste('Percentage of correct predictions:', (correct/dim(test_y_cifar)[1])*100, '%'))
 
 ##############################################################################################################################
 
 #mnist dataset
-#count the number of right predictions got by kNN algorithm
+#Make the predictions with kNN algorithm, considering the 5 closest training samples, k =5
 x <- knn(train = train_x_mnist_vector, test = test_x_mnist_vector, cl = train_y_mnist, k = 5)
 
-#conta-se a quantidade de acertos das predições realizadas pelo algoritmo de KNN
+#count the number of right predictions got by kNN algorithm
 correct <- 0
 for(i in 1:dim(test_y_mnist)[1]) {
   if(x[i] == test_y_mnist[i]) {
@@ -259,4 +261,4 @@ for(i in 1:dim(test_y_mnist)[1]) {
 }
 
 #calculate percentage
-print(paste('Percentage of correct predictions:', (correct/10000)*100, '%'))
+print(paste('Percentage of correct predictions:', (correct/dim(test_y_mnist)[1])*100, '%'))
