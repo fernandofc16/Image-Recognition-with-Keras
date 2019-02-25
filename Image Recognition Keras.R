@@ -233,7 +233,7 @@ result
 #Make the predictions with kNN algorithm, considering the 5 closest training samples, k =5
 x <- knn(train = train_x_cifar_vector, test = test_x_cifar_vector, cl = train_y_cifar, k = 5)
 
-#conta-se a quantidade de acertos das predições realizadas pelo algoritmo de KNN
+#count the number of right predictions got by kNN algorithm
 correct <- 0
 for(i in 1:dim(test_y_cifar)[1]) {
   if(x[i] == test_y_cifar[i]) {
@@ -241,13 +241,13 @@ for(i in 1:dim(test_y_cifar)[1]) {
   }
 }
 
-#calcula-se a porcentagem de acertos
-print(paste('Porcentagem de acertos:', (correct/10000)*100, '%'))
+#Calculate percentage
+print(paste('Percentage of correct predictions:', (correct/10000)*100, '%'))
 
 ##############################################################################################################################
 
 #mnist dataset
-#Make the predictions with kNN algorithm, considering the 5 closest training samples, k =5
+#count the number of right predictions got by kNN algorithm
 x <- knn(train = train_x_mnist_vector, test = test_x_mnist_vector, cl = train_y_mnist, k = 5)
 
 #conta-se a quantidade de acertos das predições realizadas pelo algoritmo de KNN
@@ -258,5 +258,5 @@ for(i in 1:dim(test_y_mnist)[1]) {
   }
 }
 
-#calcula-se a porcentagem de acertos
-print(paste('Porcentagem de acertos:', (correct/10000)*100, '%'))
+#calculate percentage
+print(paste('Percentage of correct predictions:', (correct/10000)*100, '%'))
